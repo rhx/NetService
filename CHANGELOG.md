@@ -1,3 +1,9 @@
+## 0.7.1
+### Changed
+- Swift 6.2 support.
+- Updated Package.swift tools version to 5.9.
+- Replaced deprecated `class` constraint with `AnyObject` in protocol definitions.
+
 ## 0.7.0
 ### Removed
 - Swift 4 support.
