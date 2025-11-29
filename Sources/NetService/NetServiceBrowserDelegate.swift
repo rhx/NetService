@@ -1,7 +1,7 @@
 import class Foundation.NSNumber
 
 /// The `NetServiceBrowserDelegate` protocol defines the optional methods implemented by delegates of `NetServiceBrowser` objects.
-public protocol NetServiceBrowserDelegate: class {
+public protocol NetServiceBrowserDelegate: AnyObject {
     /// Tells the delegate the sender found a domain.
     ///
     /// The delegate uses this message to compile a list of available domains. It should wait until `moreComing` is `false` to do a bulk update of user interface elements.

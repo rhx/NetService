@@ -14,6 +14,12 @@ import struct Foundation.TimeInterval
 
 import Cdns_sd
 
+#if os(Linux)
+    import Glibc
+#else
+    import Darwin
+#endif
+
 private let _registerCallback: DNSServiceRegisterReply = { (_, flags, errorCode, name, _, _, context) in
     let service: NetService = Unmanaged.fromOpaque(context!).takeUnretainedValue()
     guard errorCode == kDNSServiceErr_NoError else {
@@ -492,7 +498,8 @@ public class NetService {
 
         // resolve hostname
         var res: UnsafeMutablePointer<addrinfo>?
-        let error = getaddrinfo(host, "\(port)", nil, &res)
+        let nilInfo: UnsafePointer<addrinfo>? = nil
+        let error = getaddrinfo(host, "\(port)", nilInfo, &res)
         guard error == 0 else {
             didNotResolve(error: -1)
             return
@@ -501,7 +508,7 @@ public class NetService {
             freeaddrinfo(res)
         }
         var addresses = [Data]()
-        for addr in sequence(first: res!, next: { $0.pointee.ai_next }) {
+        for addr in sequence(first: res!, next: { (ptr: UnsafeMutablePointer<addrinfo>) -> UnsafeMutablePointer<addrinfo>? in ptr.pointee.ai_next }) {
             addresses.append(Data(bytes: addr.pointee.ai_addr, count: Int(addr.pointee.ai_addrlen)))
         }
         self.addresses = addresses

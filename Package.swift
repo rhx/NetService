@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.9
 
 import PackageDescription
 
@@ -10,7 +10,7 @@ var package = Package(
     ],
     targets: [
         .target(name: "NetService", dependencies: ["Cdns_sd"]),
-        .target(name: "dns-sd", dependencies: ["NetService"]),
+        .executableTarget(name: "dns-sd", dependencies: ["NetService"]),
         .testTarget(name: "NetServiceTests", dependencies: ["NetService"]),
     ]
 )

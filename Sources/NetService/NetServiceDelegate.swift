@@ -1,7 +1,7 @@
 import class Foundation.NSNumber
 
 /// The `NetServiceDelegate` protocol defines the optional methods implemented by delegates of `NetService` objects.
-public protocol NetServiceDelegate: class {
+public protocol NetServiceDelegate: AnyObject {
 
     // MARK: Using Network Services
 
